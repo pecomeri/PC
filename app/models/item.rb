@@ -1,27 +1,12 @@
 class Item < ActiveRecord::Base
   def get_item_xml
-    Amazon::Ecs.options = {
-      :associate_tag => Rails.application.secrets.associate_tag,
-      :AWS_access_key_id => Rails.application.secrets.AWS_access_key_id,
-      :AWS_secret_key => Rails.application.secrets.AWS_secret_key
-    }
-
-    res = Amazon::Ecs.item_search('ruby', {:response_group => 'Medium', :sort => 'salesrank',
-                                   :country => 'jp'})
+    res = Amazon::Ecs.item_search('LEGO', {:search_index => 'Toys', :country => 'jp'})
     res.marshal_dump
-
-
   end
 
-  def self.getItem
-    Amazon::Ecs.options = {
-      :associate_tag => Rails.application.secrets.associate_tag,
-      :AWS_access_key_id => Rails.application.secrets.AWS_access_key_id,
-      :AWS_secret_key => Rails.application.secrets.AWS_secret_key
-    }
-
-    res = Amazon::Ecs.item_search('ruby', {:response_group => 'Medium', :sort => 'salesrank',
-                                   :country => 'jp'})
+  def self.insert_jp_data
+    res = Amazon::Ecs.item_search('LEGO', {:response_group => 'Medium', :sort => 'salesrank',
+                                   :search_index => 'Toys', :country => 'jp'})
 
     res.items.each do |item|
       data = Item.new
@@ -33,7 +18,13 @@ class Item < ActiveRecord::Base
       data.check_date = Time.now.to_s(:db)
       data.save
     end
-    
+  end
+
+  def self.update_us_price
+    data = Item.first
+    res = Amazon::Ecs.item_lookup(data.asin, :response_group => 'Medium', :country => 'us')
+    res.items.each do |item|
+    end
     res.marshal_dump
   end
 end

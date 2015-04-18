@@ -1,8 +1,21 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_aws_option, only: [:data_save, :index, :update_us_price]
 
-  def data_save
-    Item.getItem
+  def set_aws_option
+    Amazon::Ecs.options = {
+      :associate_tag => Rails.application.secrets.associate_tag,
+      :AWS_access_key_id => Rails.application.secrets.AWS_access_key_id,
+      :AWS_secret_key => Rails.application.secrets.AWS_secret_key
+    }
+  end
+
+  def insert_jp_data 
+    Item.insert_jp_data
+  end
+
+  def update_us_price
+    @xml = Item.update_us_price
   end
 
   # GET /items
