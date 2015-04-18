@@ -1,7 +1,8 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
 
-  def insert_data
+  def data_save
+    Item.getItem
   end
 
   # GET /items
@@ -9,7 +10,7 @@ class ItemsController < ApplicationController
   def index
     @items = Item.all
     item = Item.new
-    @xml = item.getItem
+    @xml = item.get_item_xml
   end
 
   # GET /items/1
