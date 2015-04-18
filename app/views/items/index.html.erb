@@ -5,7 +5,6 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
       <th><%= model_class.human_attribute_name(:name) %></th>
       <th><%= model_class.human_attribute_name(:asin) %></th>
       <th><%= model_class.human_attribute_name(:search_index) %></th>
@@ -13,14 +12,12 @@
       <th><%= model_class.human_attribute_name(:price_us) %></th>
       <th><%= model_class.human_attribute_name(:rank_amazon) %></th>
       <th><%= model_class.human_attribute_name(:check_date) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
     <% @items.each do |item| %>
       <tr>
-        <td><%= link_to item.id, item_path(item) %></td>
         <td><%= item.name %></td>
         <td><%= item.asin %></td>
         <td><%= item.search_index %></td>
@@ -28,7 +25,6 @@
         <td><%= item.price_us %></td>
         <td><%= item.rank_amazon %></td>
         <td><%= item.check_date %></td>
-        <td><%=l item.created_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_item_path(item), :class => 'btn btn-default btn-xs' %>
