@@ -43,3 +43,5 @@ group :development, :test do
   gem 'spring'
 end
 
+# Amazon Api gem
+gem 'amazon-ecs'

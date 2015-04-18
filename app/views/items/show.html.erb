@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @item.name %>
+</p>
+
+<p>
+  <strong>Asin:</strong>
+  <%= @item.asin %>
+</p>
+
+<p>
+  <strong>Search index:</strong>
+  <%= @item.search_index %>
+</p>
+
+<p>
+  <strong>Price jp:</strong>
+  <%= @item.price_jp %>
+</p>
+
+<p>
+  <strong>Price us:</strong>
+  <%= @item.price_us %>
+</p>
+
+<p>
+  <strong>Rank amazon:</strong>
+  <%= @item.rank_amazon %>
+</p>
+
+<p>
+  <strong>Check date:</strong>
+  <%= @item.check_date %>
+</p>
+
+<%= link_to 'Edit', edit_item_path(@item) %> |
+<%= link_to 'Back', items_path %>
