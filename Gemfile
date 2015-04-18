@@ -45,3 +45,8 @@ end
 
 # Amazon Api gem
 gem 'amazon-ecs'
+
+# twitter bootstrap
+gem 'therubyracer'
+gem 'less-rails'
+gem 'twitter-bootstrap-rails'

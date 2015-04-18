@@ -1,45 +1,73 @@
-<%= form_for(@item) do |f| %>
-  <% if @item.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
+<%= form_for @item, :html => { :class => "form-horizontal item" } do |f| %>
 
-      <ul>
-      <% @item.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+    <% if @item.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @item.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+  <div class="control-group">
+    <%= f.label :name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+    <%= error_span(@item[:name]) %>
   </div>
-  <div class="field">
-    <%= f.label :asin %><br>
-    <%= f.text_field :asin %>
+  <div class="control-group">
+    <%= f.label :asin, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :asin, :class => 'form-control' %>
+    </div>
+    <%= error_span(@item[:asin]) %>
   </div>
-  <div class="field">
-    <%= f.label :search_index %><br>
-    <%= f.text_field :search_index %>
+  <div class="control-group">
+    <%= f.label :search_index, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :search_index, :class => 'form-control' %>
+    </div>
+    <%= error_span(@item[:search_index]) %>
   </div>
-  <div class="field">
-    <%= f.label :price_jp %><br>
-    <%= f.text_field :price_jp %>
+  <div class="control-group">
+    <%= f.label :price_jp, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :price_jp, :class => 'form-control' %>
+    </div>
+    <%= error_span(@item[:price_jp]) %>
   </div>
-  <div class="field">
-    <%= f.label :price_us %><br>
-    <%= f.text_field :price_us %>
+  <div class="control-group">
+    <%= f.label :price_us, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :price_us, :class => 'form-control' %>
+    </div>
+    <%= error_span(@item[:price_us]) %>
   </div>
-  <div class="field">
-    <%= f.label :rank_amazon %><br>
-    <%= f.number_field :rank_amazon %>
+  <div class="control-group">
+    <%= f.label :rank_amazon, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :rank_amazon, :class => 'form-control' %>
+    </div>
+    <%= error_span(@item[:rank_amazon]) %>
   </div>
-  <div class="field">
-    <%= f.label :check_date %><br>
-    <%= f.datetime_select :check_date %>
+  <div class="control-group">
+    <%= f.label :check_date, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :check_date, :class => 'form-control' %>
+    </div>
+    <%= error_span(@item[:check_date]) %>
   </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+
+
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            items_path, :class => 'btn btn-default' %>
+
 <% end %>
