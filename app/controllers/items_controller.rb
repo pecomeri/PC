@@ -23,7 +23,7 @@ class ItemsController < ApplicationController
   def index
     @items = Item.all
     item = Item.new
-    @xml = item.get_item_xml
+    #@xml = item.get_item_xml
   end
 
   # GET /items/1

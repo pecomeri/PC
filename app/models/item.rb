@@ -1,30 +1,39 @@
 class Item < ActiveRecord::Base
   def get_item_xml
-    res = Amazon::Ecs.item_search('LEGO', {:search_index => 'Toys', :country => 'jp'})
+    res = Amazon::Ecs.item_search('並行輸入', {:response_group => 'ItemAttributes, OfferSummary, SalesRank', :sort => 'salesrank',
+                                   :search_index => 'Toys', :country => 'jp',
+                                   :ItemPage => 10})
     res.marshal_dump
   end
 
   def self.insert_jp_data
-    res = Amazon::Ecs.item_search('LEGO', {:response_group => 'Medium', :sort => 'salesrank',
-                                   :search_index => 'Toys', :country => 'jp'})
+    search_index = 'Toys'
+    pages = 10
+    pages.times do |page|
+      res = Amazon::Ecs.item_search('並行輸入', {:response_group => 'ItemAttributes, OfferSummary, SalesRank', :sort => 'salesrank',
+                                     :search_index => search_index, :country => 'jp',
+                                     :ItemPage => page})
 
-    res.items.each do |item|
-      data = Item.new
-      data.name = item.get('ItemAttributes/Title')
-      data.asin = item.get('ASIN')
-      data.search_index = 'Books'
-      data.price_jp = item.get('ItemAttributes/ListPrice/Amount')
-      data.rank_amazon = item.get('SalesRank')
-      data.check_date = Time.now.to_s(:db)
-      data.save
+      res.items.each do |item|
+        data = Item.new(name: item.get('ItemAttributes/Title'), 
+                        asin: item.get('ASIN'), 
+                        search_index: search_index, 
+                        price_jp: item.get('OfferSummary/LowestNewPrice/Amount'), 
+                        rank_amazon: item.get('SalesRank'), 
+                        check_date:  Time.now.to_s(:db))
+        data.save
+      end
+      sleep(2)
     end
   end
 
   def self.update_us_price
-    data = Item.first
-    res = Amazon::Ecs.item_lookup(data.asin, :response_group => 'Medium', :country => 'us')
+    data = Item.find(163)
+    res = Amazon::Ecs.item_lookup(data.asin, :response_group => 'OfferSummary', :country => 'us')
     res.items.each do |item|
+      data.price_us = item.get('OfferSummary/LowestNewPrice/Amount').to_i * 1.2
+      data.save
     end
-    res.marshal_dump
+    data.price_us
   end
 end
