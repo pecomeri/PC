@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  asin: MyString
+  search_index: MyString
+  price_jp: 1.5
+  price_us: 1.5
+  rank_amazon: 1
+  check_date: 2015-04-18 22:12:02
+
+two:
+  name: MyString
+  asin: MyString
+  search_index: MyString
+  price_jp: 1.5
+  price_us: 1.5
+  rank_amazon: 1
+  check_date: 2015-04-18 22:12:02
