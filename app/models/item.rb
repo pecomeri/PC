@@ -8,7 +8,7 @@ class Item < ActiveRecord::Base
 
   def self.insert_jp_data
     search_index = 'Toys'
-    pages = 10
+    pages = 100
     search_options = {
       response_group: 'ItemAttributes, OfferSummary, SalesRank',
       sort: 'salesrank',
@@ -30,16 +30,19 @@ class Item < ActiveRecord::Base
                        )
         data.save
       end
+      sleep(2)
     end
   end
 
   def self.update_us_price
-    data = Item.find(163)
-    res = Amazon::Ecs.item_lookup(data.asin, :response_group => 'OfferSummary', :country => 'us')
-    res.items.each do |item|
-      data.price_us = item.get('OfferSummary/LowestNewPrice/Amount').to_i * 1.2
-      data.save
+    records = Item.all
+    records.each do |record|
+      res = Amazon::Ecs.item_lookup(record.asin, :response_group => 'OfferSummary', :country => 'us')
+      res.items.each do |item|
+        record.price_us = item.get('OfferSummary/LowestNewPrice/Amount').to_i * 1.2
+        record.save
+      end
+      sleep(2)
     end
-    data.price_us
   end
 end

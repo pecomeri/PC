@@ -15,7 +15,7 @@ class ItemsController < ApplicationController
   end
 
   def update_us_price
-    @xml = Item.update_us_price
+    Item.update_us_price
   end
 
   # GET /items
